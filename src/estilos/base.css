@@ -1,0 +1,301 @@
+/* ==========================================================================
+   Base y línea de flotación de mobile-native.
+   Cada regla lleva el porqué: se aplican donde aplica el motivo, no por hábito.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-tap-highlight-color: transparent; /* el flash gris al tocar delata la web */
+  -webkit-text-size-adjust: 100%;           /* sin inflado de fuente en horizontal */
+  overscroll-behavior: none;                /* sin pull-to-refresh secuestrando el scroll */
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--body);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body.sin-scroll { overflow: hidden; }
+
+img, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font-family: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, h4, p, dl, dd, figure, blockquote { margin: 0; }
+table { border-collapse: collapse; width: 100%; }
+
+/* Controles: nunca seleccionables y sin el retardo de 300 ms.
+   Nunca en body: el usuario copia direcciones y números de radicado. */
+button, a, [role='button'], [role='radio'], [role='tab'], summary {
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* 16 px o iOS hace zoom al enfocar y no vuelve */
+input, textarea, select { font-size: 16px; }
+
+::selection { background: var(--primary); color: var(--on-primary); }
+
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.solo-lectores {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.saltar {
+  position: absolute; left: 50%; top: 8px;
+  transform: translate(-50%, -180%);
+  background: var(--ink); color: var(--on-dark);
+  padding: 12px 24px;
+  font-size: 13px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  z-index: var(--z-menu);
+  transition: transform 200ms var(--ease-out);
+}
+.saltar:focus { transform: translate(-50%, 0); }
+
+/* --- Tipografía ---------------------------------------------------------- */
+/* La firma es el contraste entre el 700 y el 300. Tracking en cero. */
+.d-xl { font-size: clamp(38px, 5vw, 64px); font-weight: 700; line-height: 1.05; color: var(--ink); }
+.d-lg { font-size: clamp(30px, 3.6vw, 48px); font-weight: 700; line-height: 1.1;  color: var(--ink); }
+.d-md { font-size: clamp(24px, 2.4vw, 32px); font-weight: 700; line-height: 1.15; color: var(--ink); }
+.d-sm { font-size: clamp(20px, 1.8vw, 24px); font-weight: 700; line-height: 1.25; color: var(--ink); }
+
+.t-lg { font-size: 20px; font-weight: 700; line-height: 1.3; color: var(--ink); }
+.t-md { font-size: 18px; font-weight: 700; line-height: 1.4; color: var(--ink); }
+.t-sm { font-size: 16px; font-weight: 700; line-height: 1.4; color: var(--ink); }
+
+.b-md { font-size: 16px; font-weight: 300; line-height: 1.6; }
+.b-sm { font-size: 14px; font-weight: 300; line-height: 1.6; }
+.cap  { font-size: 12px; font-weight: 400; line-height: 1.4; letter-spacing: 0.5px; color: var(--muted); }
+.fina { font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--fine); }
+
+.rotulo {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.rotulo--apagado { color: var(--muted); }
+.rotulo--azul { color: var(--primary); }
+
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+.entrada {
+  font-size: clamp(17px, 1.4vw, 19px);
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--body-strong);
+  max-width: 54ch;
+}
+
+.medida { max-width: var(--measure); }
+
+/* Sobre banda oscura */
+.en-oscuro { color: var(--on-dark-soft); }
+.en-oscuro .d-xl, .en-oscuro .d-lg, .en-oscuro .d-md, .en-oscuro .d-sm,
+.en-oscuro .t-lg, .en-oscuro .t-md, .en-oscuro .t-sm, .en-oscuro .rotulo { color: var(--on-dark); }
+.en-oscuro .rotulo--apagado { color: var(--on-dark-soft); }
+.en-oscuro .entrada { color: var(--on-dark-soft); }
+
+/* --- Contenedores -------------------------------------------------------- */
+.contenedor {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.contenedor--angosto { max-width: 1120px; }
+
+.banda { padding-block: var(--section); position: relative; }
+.banda--suave { background: var(--surface-soft); }
+.banda--oscura { background: var(--surface-dark); }
+.banda--ajustada { padding-block: clamp(40px, 5vw, 64px); }
+
+.regla { height: 1px; background: var(--hairline); border: 0; margin: 0; }
+
+/* --- Ambiente ------------------------------------------------------------ */
+/* Dos luces radiales muy tenues. Capa fija y sin eventos: nunca sobre un
+   contenedor con scroll, porque repinta la GPU en cada frame. */
+.ambiente {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-ambient);
+  pointer-events: none;
+  background:
+    radial-gradient(48vw 44vw at 78% 6%, rgba(28, 105, 212, 0.045), transparent 62%),
+    radial-gradient(42vw 40vw at 10% 72%, rgba(120, 110, 96, 0.04), transparent 64%);
+}
+
+/* --- Botones ------------------------------------------------------------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 32px;
+  border-radius: var(--r-0);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out),
+              border-color 180ms var(--ease-out), transform 140ms var(--ease-out);
+}
+.boton:active { transform: scale(0.98); }
+
+.boton--primario { background: var(--primary); color: var(--on-primary); }
+.boton--primario:active { background: var(--primary-active); }
+
+.boton--secundario { background: var(--canvas); color: var(--ink); border: 1px solid var(--hairline-strong); }
+
+.boton--sobre-oscuro { background: transparent; color: var(--on-dark); border: 1px solid var(--on-dark); }
+
+.boton--tinta { background: var(--ink); color: var(--on-dark); }
+
+.boton--bloque { width: 100%; }
+.boton--chico { height: 40px; padding: 0 20px; font-size: 13px; }
+
+.boton[disabled] {
+  background: var(--surface-strong);
+  color: var(--fine);
+  border-color: var(--hairline-strong);
+  pointer-events: none;
+}
+
+/* El hover se activa solo donde el puntero es fino: en táctil se queda pegado */
+@media (hover: hover) and (pointer: fine) {
+  .boton--primario:hover { background: var(--primary-active); }
+  .boton--secundario:hover { border-color: var(--ink); }
+  .boton--sobre-oscuro:hover { background: rgba(255, 255, 255, 0.12); }
+  .boton--tinta:hover { background: #000000; }
+}
+
+/* Enlace en versalita con chevrón */
+.mas {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  /* Área tocable de 45 px sin mover el layout */
+  padding-block: 15px;
+  margin-block: -15px;
+}
+.mas::after {
+  content: '';
+  width: 6px; height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-top: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 180ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .mas:hover { color: var(--primary); }
+  .mas:hover::after { transform: rotate(45deg) translate(2px, -2px); }
+}
+.en-oscuro .mas { color: var(--on-dark); }
+@media (hover: hover) and (pointer: fine) {
+  .en-oscuro .mas:hover { color: var(--primary-on-dark); }
+}
+
+/* --- Etiquetas pastel ---------------------------------------------------- */
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--r-full);
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.etiqueta--verde   { background: var(--pale-green-bg);  color: var(--pale-green-ink); }
+.etiqueta--azul    { background: var(--pale-blue-bg);   color: var(--pale-blue-ink); }
+.etiqueta--amarilla{ background: var(--pale-yellow-bg); color: var(--pale-yellow-ink); }
+.etiqueta--roja    { background: var(--pale-red-bg);    color: var(--pale-red-ink); }
+
+/* --- Campos de formulario ------------------------------------------------ */
+.campo { display: grid; gap: 6px; }
+.campo > label { font-size: 13px; font-weight: 700; color: var(--ink); }
+
+.control {
+  width: 100%;
+  height: 48px;
+  padding: 14px 16px;
+  background: var(--canvas);
+  color: var(--ink);
+  border: 1px solid var(--control-border);
+  border-radius: var(--r-0);
+  font-weight: 300;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+.control::placeholder { color: var(--fine); }
+.control:focus { outline: none; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.control[aria-invalid='true'] { border-color: var(--pale-red-ink); box-shadow: inset 0 0 0 1px var(--pale-red-ink); }
+textarea.control { height: auto; min-height: 96px; resize: vertical; }
+select.control {
+  appearance: none;
+  padding-right: 42px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.error { font-size: 12px; font-weight: 400; color: var(--pale-red-ink); }
+
+.consentimiento { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; font-weight: 300; line-height: 1.5; }
+.consentimiento input { width: 20px; height: 20px; margin: 2px 0 0; flex: none; accent-color: var(--primary); }
+.consentimiento a { text-decoration: underline; text-underline-offset: 2px; }
+
+/* --- Revelado en scroll --------------------------------------------------- */
+.sube { opacity: 0; transform: translateY(12px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+.sube.visible { opacity: 1; transform: translateY(0); }
+
+/* --- Preferencias del usuario -------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .sube { opacity: 1; transform: none; }
+  .ambiente { display: none; }
+}
+
+@media (prefers-contrast: more) {
+  .control { border-width: 2px; }
+  .regla { background: var(--muted); }
+}
+
+@media print {
+  .ambiente, .boton, .saltar { display: none !important; }
+  body { color: #000; }
+}

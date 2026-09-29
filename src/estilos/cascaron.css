@@ -1,0 +1,185 @@
+/* ==========================================================================
+   Cascarón: encabezado, menú móvil, pie y salida rápida.
+   Persisten en las cinco vistas. Son lo único compartido entre módulos.
+   ========================================================================== */
+
+/* --- Encabezado ---------------------------------------------------------- */
+.encabezado {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-nav);
+  background: rgba(255, 255, 255, 0.86);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--hairline);
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.encabezado__fila {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  height: 64px;
+}
+
+.marca { display: flex; align-items: center; gap: 10px; margin-right: auto; min-width: 0; }
+.marca img { width: 34px; height: 34px; flex: none; object-fit: contain; }
+.marca__texto { display: grid; line-height: 1.15; min-width: 0; }
+.marca__texto b { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+.marca__texto span { font-size: 11px; font-weight: 400; letter-spacing: 0.5px; color: var(--muted); white-space: nowrap; }
+
+.enlaces { display: flex; align-items: center; gap: var(--s-5); }
+
+.enlace {
+  position: relative;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+  padding-block: 6px;
+}
+.enlace::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.enlace.activo { font-weight: 700; }
+.enlace.activo::after { transform: scaleX(1); }
+@media (hover: hover) and (pointer: fine) {
+  .enlace:hover { color: var(--primary); }
+  .enlace:hover::after { transform: scaleX(1); }
+}
+
+.encabezado__tel { font-size: 14px; font-weight: 700; color: var(--ink); white-space: nowrap; }
+
+.hamburguesa {
+  display: none;
+  position: relative;
+  width: 44px; height: 44px;
+  flex: none;
+  border: 1px solid var(--hairline-strong);
+}
+.hamburguesa i {
+  position: absolute; left: 13px;
+  width: 16px; height: 1.5px;
+  background: var(--ink);
+  transition: transform 280ms var(--ease);
+}
+.hamburguesa i:nth-child(1) { top: 18px; }
+.hamburguesa i:nth-child(2) { top: 24px; }
+.hamburguesa.abierta i:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+.hamburguesa.abierta i:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
+
+/* --- Menú móvil ---------------------------------------------------------- */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-menu);
+  background: var(--canvas);
+  padding: calc(84px + env(safe-area-inset-top, 0px)) var(--gutter) calc(32px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: menuEntra 220ms var(--ease-out) both;
+}
+@keyframes menuEntra { from { opacity: 0; } }
+
+.menu__enlace {
+  padding: 18px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 1px solid var(--hairline);
+  animation: menuItem 320ms var(--ease) both;
+}
+.menu__enlace:nth-child(1) { animation-delay: 40ms; }
+.menu__enlace:nth-child(2) { animation-delay: 80ms; }
+.menu__enlace:nth-child(3) { animation-delay: 120ms; }
+.menu__enlace:nth-child(4) { animation-delay: 160ms; }
+@keyframes menuItem { from { opacity: 0; transform: translateY(10px); } }
+
+.menu__pie { margin-top: var(--s-7); display: grid; gap: var(--s-3); }
+
+/* --- Pie ----------------------------------------------------------------- */
+.pie {
+  background: var(--surface-soft);
+  border-top: 1px solid var(--hairline);
+  padding-block: var(--s-8) var(--s-5);
+  padding-bottom: calc(var(--s-5) + env(safe-area-inset-bottom, 0px));
+  position: relative;
+  z-index: 1;
+}
+.pie__rejilla { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.2fr; gap: var(--s-7) var(--s-5); }
+.pie__marca { display: flex; align-items: center; gap: 10px; margin-bottom: var(--s-4); }
+.pie__marca img { width: 40px; height: 40px; object-fit: contain; }
+.pie__marca b { display: block; font-size: 15px; font-weight: 700; color: var(--ink); }
+.pie h4 { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink); margin-bottom: var(--s-4); }
+.pie__enlaces { display: grid; gap: 10px; }
+.pie__enlaces a { font-size: 14px; font-weight: 300; color: var(--body); }
+@media (hover: hover) and (pointer: fine) { .pie__enlaces a:hover { color: var(--primary); } }
+.pie__abajo {
+  margin-top: var(--s-8);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--hairline);
+  display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5);
+  align-items: center; justify-content: space-between;
+}
+
+/* --- Salida rápida -------------------------------------------------------- */
+/* Solo aparece en la sección de refugio. Para alguien que puede estar siendo
+   vigilado, un botón que borra la pantalla es funcionalidad, no adorno. */
+.salida {
+  position: fixed;
+  right: var(--s-4);
+  bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px));
+  z-index: var(--z-escape);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 20px;
+  background: var(--ink);
+  color: var(--on-dark);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  animation: salidaEntra 240ms var(--ease-out) both;
+}
+@keyframes salidaEntra { from { opacity: 0; transform: translateY(8px); } }
+.salida:active { transform: scale(0.98); }
+@media (hover: hover) and (pointer: fine) { .salida:hover { background: #000; } }
+.salida kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--r-sm);
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .pie__rejilla { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 860px) {
+  .enlaces, .encabezado__tel { display: none; }
+  .hamburguesa { display: block; }
+  .encabezado__fila { gap: var(--s-3); }
+}
+
+/* Debajo de esto el logotipo y el botón no caben en la misma línea */
+@media (max-width: 560px) {
+  .marca__texto { display: none; }
+  .encabezado .boton--chico { padding: 0 14px; }
+}
+
+@media (max-width: 767px) {
+  .pie__rejilla { grid-template-columns: 1fr; gap: var(--s-6); }
+  .salida { left: var(--s-4); right: var(--s-4); justify-content: center; }
+}

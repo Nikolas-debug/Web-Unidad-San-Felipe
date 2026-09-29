@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Módulo Sedes. Lenguaje propio: conmutador de sede, ficha con tabla de
+   dotación y galería de espacios en mosaico irregular.
+   ========================================================================== */
+
+.sedes__cabecera { display: grid; gap: var(--s-4); max-width: var(--measure); }
+
+/* --- Conmutador ------------------------------------------------------------ */
+.conmutador {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--hairline-strong);
+  margin-bottom: var(--s-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.conmutador::-webkit-scrollbar { display: none; }
+
+.conmutador__opcion {
+  flex: 1 1 0;
+  min-width: 180px;
+  padding: var(--s-4) var(--s-5);
+  text-align: left;
+  background: var(--canvas);
+  border-right: 1px solid var(--hairline-strong);
+  display: grid;
+  gap: 3px;
+  transition: background-color 180ms var(--ease-out);
+}
+.conmutador__opcion:last-child { border-right: 0; }
+.conmutador__opcion b { font-size: 16px; font-weight: 700; color: var(--ink); }
+.conmutador__opcion span { font-size: 12px; font-weight: 400; letter-spacing: 0.5px; color: var(--muted); }
+.conmutador__opcion[aria-selected='true'] { background: var(--ink); }
+.conmutador__opcion[aria-selected='true'] b { color: var(--on-dark); }
+.conmutador__opcion[aria-selected='true'] span { color: var(--on-dark-soft); }
+@media (hover: hover) and (pointer: fine) {
+  .conmutador__opcion:not([aria-selected='true']):hover { background: var(--surface-soft); }
+}
+
+/* --- Ficha ----------------------------------------------------------------- */
+.ficha { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-7); align-items: start; }
+.ficha--entra { animation: fichaEntra 320ms var(--ease) both; }
+@keyframes fichaEntra { from { opacity: 0; transform: translateY(10px); } }
+
+.ficha__datos { display: grid; gap: var(--s-4); }
+
+.ficha__tabla { width: 100%; }
+.ficha__tabla th, .ficha__tabla td {
+  text-align: left;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+  font-size: 15px;
+  font-weight: 300;
+}
+.ficha__tabla th {
+  width: 120px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-right: var(--s-4);
+}
+.ficha__tabla td b { font-weight: 700; color: var(--ink); }
+
+.ficha__dotacion { display: grid; gap: 0; }
+.ficha__dotacion li {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: var(--s-3);
+  padding-block: 12px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 15px;
+  font-weight: 300;
+}
+.ficha__dotacion li:first-child { border-top: 1px solid var(--hairline); }
+.ficha__vineta { color: var(--primary); font-family: var(--font-mono); font-size: 12px; padding-top: 3px; }
+
+.ficha__pendiente {
+  padding: var(--s-4);
+  background: var(--pale-yellow-bg);
+  border-left: 3px solid var(--pale-yellow-ink);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #6f4a00;
+}
+
+.ficha__acciones { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+
+/* --- Galería --------------------------------------------------------------- */
+/* Mosaico irregular: cada celda tiene el tamaño que pide su foto. */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+.galeria__celda { position: relative; overflow: hidden; background: var(--surface-card); }
+.galeria__celda img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.5) contrast(1.02); transition: transform 700ms var(--ease); }
+.galeria__celda--ancho { grid-column: span 2; }
+.galeria__celda--alto { grid-row: span 2; }
+.galeria__celda::after { content: ''; position: absolute; inset: 0; background: rgba(120, 110, 96, 0.04); pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .galeria__celda:hover img { transform: scale(1.03); }
+}
+
+.galeria__pie {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 1;
+  padding: var(--s-4);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(26, 33, 41, 0.72));
+}
+
+/* --- Responsive ------------------------------------------------------------ */
+@media (max-width: 1023px) {
+  .ficha { grid-template-columns: 1fr; gap: var(--s-6); }
+  .galeria { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .galeria__celda--alto { grid-row: span 1; }
+}
+
+@media (max-width: 640px) {
+  .galeria { grid-template-columns: 1fr; }
+  .galeria__celda--ancho { grid-column: span 1; }
+  .conmutador { flex-direction: column; }
+  .conmutador__opcion { border-right: 0; border-bottom: 1px solid var(--hairline-strong); }
+  .conmutador__opcion:last-child { border-bottom: 0; }
+  .ficha__tabla th { width: 96px; }
+}

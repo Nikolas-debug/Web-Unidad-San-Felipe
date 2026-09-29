@@ -1,0 +1,72 @@
+/* ==========================================================================
+   Tokens. Heredados de la maqueta 3 aprobada: base corporativa de DESIGN.md
+   con la materialidad de minimalist-ui.
+
+   Los valores con ratio anotado ya vienen corregidos respecto al DESIGN.md
+   original, que tenía seis pares que no pasaban AA. Ver NOTES.md.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Acción: un solo color de marca en toda la interfaz */
+  --primary:         #1c69d4;  /* blanco encima 5.22:1 */
+  --primary-active:  #0653b6;  /* blanco encima 7.19:1 */
+  --primary-on-dark: #6ba3e8;  /* 6.21:1 sobre navy. El azul de marca da 3.11:1 */
+
+  /* Superficies */
+  --canvas:         #ffffff;
+  --surface-soft:   #f7f7f7;
+  --surface-card:   #fafafa;
+  --surface-strong: #ebebeb;
+  --surface-dark:   #1a2129;
+  --surface-dark-e: #262e38;
+
+  /* Hairlines */
+  --hairline:        #e6e6e6;  /* solo divisores decorativos */
+  --hairline-strong: #cccccc;
+  --control-border:  #8a8a8a;  /* 3.45:1. El borde ES el control */
+
+  /* Texto */
+  --ink:          #262626;  /* 15.13:1 */
+  --body:         #3c3c3c;  /* 11.03:1 */
+  --body-strong:  #1a1a1a;
+  --muted:        #6b6b6b;  /* 5.33:1 */
+  --fine:         #767676;  /* 4.54:1. El #9a9a9a del sistema da 2.81:1 */
+  --on-primary:   #ffffff;
+  --on-dark:      #ffffff;
+  --on-dark-soft: #c7ccd4;  /* 10.06:1 sobre navy */
+
+  /* Semánticos en pastel lavado. Los crudos del sistema no pasan como texto. */
+  --pale-red-bg:    #fdebec;  --pale-red-ink:    #9f2f2d;  /* 6.26:1 */
+  --pale-blue-bg:   #e1f3fe;  --pale-blue-ink:   #1f6c9f;  /* 4.98:1 */
+  --pale-green-bg:  #edf3ec;  --pale-green-ink:  #346538;  /* 6.08:1 */
+  --pale-yellow-bg: #fbf3db;  --pale-yellow-ink: #956400;  /* 4.62:1 */
+
+  /* Forma: rectangular para todo, círculo solo para iconos */
+  --r-0: 0px;
+  --r-sm: 4px;
+  --r-full: 9999px;
+
+  /* Espaciado base 8 */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+  --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+  --section: clamp(56px, 7vw, 96px);
+  --gutter: clamp(20px, 4vw, 40px);
+  --shell: 1440px;
+  --measure: 68ch;
+
+  /* Tipografía: dos pesos, 700 y 300. El 500 no existe en este sistema. */
+  --font: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Curvas */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Capas: solo contextos sistémicos, nunca valores arbitrarios */
+  --z-ambient: 0;
+  --z-nav: 40;
+  --z-menu: 60;
+  --z-escape: 70;
+}

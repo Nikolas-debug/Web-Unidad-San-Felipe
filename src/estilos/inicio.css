@@ -1,0 +1,138 @@
+/* ==========================================================================
+   Módulo Inicio. Lenguaje propio: portada oscura a sangre, pilares
+   asimétricos, escalera numerada y franja de respaldo.
+   ========================================================================== */
+
+/* --- Portada -------------------------------------------------------------- */
+.portada { background: var(--surface-dark); position: relative; overflow: hidden; }
+
+.portada__rejilla {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: var(--s-7);
+  padding-block: var(--section);
+}
+
+.portada__texto { display: grid; gap: var(--s-5); align-content: start; }
+.portada__acciones { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-2); }
+
+.portada__media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  background: var(--surface-dark-e);
+  overflow: hidden;
+}
+.portada__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* Desaturada y con velo cálido para integrarla al monocromo */
+  filter: saturate(0.55) contrast(1.03) brightness(0.94);
+}
+.portada__media::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(26, 33, 41, 0.66), rgba(26, 33, 41, 0.08) 58%, transparent);
+}
+
+.portada__pie {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-5) var(--s-6);
+  margin-top: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+.portada__dato b { display: block; font-size: 22px; font-weight: 700; color: var(--on-dark); line-height: 1.1; }
+.portada__dato span { display: block; font-size: 12px; font-weight: 400; letter-spacing: 0.5px; color: var(--on-dark-soft); margin-top: 5px; }
+
+/* --- Pilares -------------------------------------------------------------- */
+/* Uno grande con foto y dos de texto: nunca tres tarjetas idénticas. */
+.pilares { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: var(--s-6); align-items: stretch; }
+
+.pilar-principal { display: flex; flex-direction: column; }
+.pilar-principal__foto { aspect-ratio: 16 / 10; background: var(--surface-card); overflow: hidden; }
+.pilar-principal__foto img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.5) contrast(1.02); }
+.pilar-principal__cuerpo { padding-top: var(--s-5); display: grid; gap: var(--s-3); }
+
+.pilares__secundarios { display: grid; gap: var(--s-5); align-content: start; }
+.pilar-menor {
+  display: grid;
+  gap: var(--s-2);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--hairline);
+}
+.pilar-menor__indice {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+
+/* --- Ruta del usuario ----------------------------------------------------- */
+/* Escalera numerada. Es una secuencia, no una lista de viñetas. */
+.ruta { display: grid; gap: 0; counter-reset: paso; }
+
+.ruta__paso {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: var(--s-5);
+  align-items: start;
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--hairline);
+}
+.ruta__paso:last-child { border-bottom: 1px solid var(--hairline); }
+
+.ruta__numero {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--primary);
+  letter-spacing: 1px;
+  padding-top: 4px;
+}
+
+/* --- Franja de respaldo --------------------------------------------------- */
+.respaldo__rejilla {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--s-7);
+  align-items: start;
+}
+.respaldo__lista { display: grid; gap: 0; }
+.respaldo__item {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: var(--s-3);
+  padding-block: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--on-dark-soft);
+}
+.respaldo__item:first-child { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+.respaldo__marca {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--primary-on-dark);
+  padding-top: 3px;
+}
+
+/* --- Cierre --------------------------------------------------------------- */
+.cierre { display: grid; gap: var(--s-5); justify-items: start; max-width: 62ch; }
+.cierre__acciones { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+/* --- Responsive ----------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .portada__rejilla { grid-template-columns: 1fr; gap: var(--s-6); }
+  .pilares { grid-template-columns: 1fr; }
+  .respaldo__rejilla { grid-template-columns: 1fr; gap: var(--s-6); }
+}
+
+@media (max-width: 767px) {
+  .ruta__paso { grid-template-columns: 56px minmax(0, 1fr); gap: var(--s-3); }
+  .ruta__paso > p:last-child { grid-column: 2; }
+  .portada__pie { gap: var(--s-4); }
+  .portada__dato { min-width: 42%; }
+}
