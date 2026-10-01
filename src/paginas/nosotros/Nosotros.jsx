@@ -3,7 +3,7 @@ import Manifiesto from './Manifiesto.jsx'
 import MisionVision from './MisionVision.jsx'
 import HorizonteVision from './HorizonteVision.jsx'
 import { Revelar } from '../../ui/primitivos.jsx'
-import { empresa } from '../../datos/contenido.js'
+import { empresa } from '../../data/contenido.js'
 
 export default function Nosotros() {
   useEffect(() => {

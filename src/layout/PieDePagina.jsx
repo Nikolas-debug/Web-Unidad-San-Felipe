@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { empresa, servicios } from '../datos/contenido.js'
+import { empresa, servicios } from '../data/contenido.js'
 
 export default function PieDePagina() {
   const anio = new Date().getFullYear()

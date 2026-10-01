@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react'
 import SelectorCanal from './SelectorCanal.jsx'
 import SolicitudFamilia from './SolicitudFamilia.jsx'
+import SolicitudHuesped from './SolicitudHuesped.jsx'
 import SolicitudInstitucion from './SolicitudInstitucion.jsx'
 import ComprobanteSolicitud from './ComprobanteSolicitud.jsx'
 import { Revelar } from '../../ui/primitivos.jsx'
-import { empresa } from '../../datos/contenido.js'
+import { empresa } from '../../data/contenido.js'
 import { fechaLegible } from './validaciones.js'
 
 const VACIO = 'Por definir'
 
 export default function Reservar() {
-  const [canal, setCanal] = useState(null)      // null | 'institucion' | 'familia'
+  const [canal, setCanal] = useState(null)      // null | 'institucion' | 'familia' | 'huesped'
   const [enviado, setEnviado] = useState(null)  // datos del formulario enviado
   const [borrador, setBorrador] = useState({})  // lo que se va escribiendo
 
@@ -24,25 +25,44 @@ export default function Reservar() {
     setBorrador({})
   }
 
-  const esInstitucion = canal === 'institucion'
+  const fecha = (iso) => (iso ? fechaLegible(iso) : '')
 
   /* El resumen lateral se llena mientras el usuario escribe. Muestra lo que
-     lleva decidido, no lo que le falta, para no leerse como un reproche. */
-  const filasResumen = esInstitucion
-    ? [
-        ['CANAL', 'Institución'],
-        ['ENTIDAD', borrador.institucion],
-        ['SEDE', borrador.sede],
-        ['CUPOS', borrador.cupos],
-        ['INGRESO', borrador.ingreso ? fechaLegible(borrador.ingreso) : ''],
-      ]
-    : [
-        ['CANAL', canal ? 'Familiar' : ''],
-        ['PACIENTE', borrador.paciente],
-        ['SEDE', borrador.sede],
-        ['HABITACIÓN', borrador.habitacion],
-        ['INGRESO', borrador.ingreso ? fechaLegible(borrador.ingreso) : ''],
-      ]
+     lleva decidido, no lo que le falta, para no leerse como un reproche.
+     Cada canal resume cosas distintas: una institución compara cupos, una
+     familia compara habitación, un huésped particular compara fechas. */
+  const RESUMEN = {
+    institucion: () => [
+      ['CANAL', 'Institución'],
+      ['ENTIDAD', borrador.institucion],
+      ['SEDE', borrador.sede],
+      ['CUPOS', borrador.cupos],
+      ['INGRESO', fecha(borrador.ingreso)],
+    ],
+    familia: () => [
+      ['CANAL', 'Familiar'],
+      ['PACIENTE', borrador.paciente],
+      ['SEDE', borrador.sede],
+      ['HABITACIÓN', borrador.habitacion],
+      ['INGRESO', fecha(borrador.ingreso)],
+    ],
+    huesped: () => [
+      ['CANAL', 'Huésped particular'],
+      ['PERSONAS', borrador.personas],
+      ['HABITACIÓN', borrador.habitacion],
+      ['LLEGADA', fecha(borrador.ingreso)],
+      ['SALIDA', fecha(borrador.salida)],
+    ],
+  }
+
+  const FORMULARIO = {
+    institucion: SolicitudInstitucion,
+    familia: SolicitudFamilia,
+    huesped: SolicitudHuesped,
+  }
+
+  const filasResumen = (RESUMEN[canal] || RESUMEN.familia)()
+  const Formulario = FORMULARIO[canal]
 
   const llenas = filasResumen.filter(([, v]) => v).length
 
@@ -52,7 +72,7 @@ export default function Reservar() {
         <div className="contenedor">
           <Revelar className="reservar__cabecera">
             <p className="rotulo rotulo--azul">Reservar habitación</p>
-            <h1 className="d-lg">Solicita un cupo en el hogar de paso</h1>
+            <h1 className="d-lg">Solicita una habitación</h1>
             <p className="entrada">
               La solicitud no confirma la reserva: admisiones revisa la
               disponibilidad real de la sede y responde al contacto que dejes.
@@ -69,14 +89,8 @@ export default function Reservar() {
             <div className="solicitud">
               {enviado ? (
                 <ComprobanteSolicitud canal={canal} datos={enviado} alReiniciar={reiniciar} />
-              ) : esInstitucion ? (
-                <SolicitudInstitucion
-                  alEnviar={setEnviado}
-                  alVolver={reiniciar}
-                  alCambiarResumen={setBorrador}
-                />
               ) : (
-                <SolicitudFamilia
+                <Formulario
                   alEnviar={setEnviado}
                   alVolver={reiniciar}
                   alCambiarResumen={setBorrador}

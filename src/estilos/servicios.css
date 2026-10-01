@@ -1,45 +1,105 @@
 /* ==========================================================================
-   Módulo Servicios. Lenguaje propio: índice lateral pegajoso, bloques
-   editoriales alternados, comparación de turnos y sección de refugio.
+   Módulo Servicios. Lenguaje propio: menú lateral pegajoso que revela un
+   servicio a la vez, bloque editorial, comparación de turnos y refugio.
    ========================================================================== */
 
 .servicios__cabecera { display: grid; gap: var(--s-4); max-width: var(--measure); }
 
-/* --- Índice --------------------------------------------------------------- */
+/* --- Menú del portafolio --------------------------------------------------- */
 .servicios__cuerpo { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--s-8); align-items: start; }
 
-.indice { position: sticky; top: 88px; display: grid; gap: 0; }
-.indice__titulo {
+.menu-portafolio { position: sticky; top: 88px; display: grid; gap: 0; }
+.menu-portafolio__titulo {
   font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
   color: var(--muted); padding-bottom: var(--s-3); border-bottom: 1px solid var(--hairline);
 }
-.indice__enlace {
-  display: block;
-  padding: 12px 0;
+.menu-portafolio__opcion {
+  display: grid;
+  grid-template-columns: 10px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 0;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+  font: inherit;
   font-size: 14px;
   font-weight: 300;
   color: var(--body);
-  border-bottom: 1px solid var(--hairline);
-  transition: color 180ms var(--ease-out), padding-left 220ms var(--ease-out);
+  text-align: left;
+  cursor: pointer;
+  transition: color 180ms var(--ease-out);
 }
-.indice__enlace.activo { font-weight: 700; color: var(--ink); padding-left: 10px; }
-@media (hover: hover) and (pointer: fine) { .indice__enlace:hover { color: var(--primary); } }
+/* La marca es el único elemento que se mueve: crece de 0 a 10px al elegir.
+   Sin ella, la única señal sería la negrita, que salta el texto de sitio. */
+.menu-portafolio__marca {
+  height: 1px;
+  width: 0;
+  background: var(--primary);
+  transition: width 260ms var(--ease-out);
+}
+.menu-portafolio__opcion.activa { font-weight: 700; color: var(--ink); }
+.menu-portafolio__opcion.activa .menu-portafolio__marca { width: 10px; }
+@media (hover: hover) and (pointer: fine) {
+  .menu-portafolio__opcion:hover { color: var(--primary); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-portafolio__marca { transition: none; }
+}
+
+/* --- Panel ----------------------------------------------------------------- */
+/* Un servicio a la vez. El panel no dibuja nada: solo fija el punto de
+   llegada del scroll y quita el anillo de foco que no aporta, porque el
+   foco llega aquí por programa y no por tabulación. */
+.panel-servicio { scroll-margin-top: 88px; outline: none; }
 
 /* --- Bloque de servicio ---------------------------------------------------- */
 .bloque {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--s-7);
-  align-items: center;
-  padding-block: var(--section);
-  border-top: 1px solid var(--hairline);
-  scroll-margin-top: 88px;
+  align-items: stretch;
+  padding-bottom: var(--s-7);
 }
-.bloque:first-child { border-top: 0; padding-top: 0; }
 .bloque--invertido .bloque__media { order: -1; }
 
-.bloque__media { aspect-ratio: 4 / 3; background: var(--surface-card); overflow: hidden; }
-.bloque__media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.5) contrast(1.02); }
+.bloque__alcance {
+  margin-top: var(--s-2);
+  padding: var(--s-4);
+  background: var(--surface-card);
+  border-left: 3px solid var(--hairline-strong);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--body);
+}
+.bloque__alcance b { font-weight: 700; color: var(--ink); }
+
+/* La apertura al público amplía el servicio, el alcance lo limita. Mismo
+   formato, filete de distinto color, para que no se lean como lo mismo. */
+.bloque__apertura {
+  margin-top: var(--s-2);
+  padding: var(--s-4);
+  background: var(--surface-card);
+  border-left: 3px solid var(--primary);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--body);
+}
+.bloque__apertura b { font-weight: 700; color: var(--ink); }
+
+.bloque__foto {
+  display: block;
+  position: sticky;
+  top: 88px;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-card);
+  overflow: hidden;
+}
+.bloque__foto img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.5) contrast(1.02); }
 
 .bloque__texto { display: grid; gap: var(--s-4); }
 
@@ -67,7 +127,11 @@
 .terapia:first-child { border-top: 1px solid var(--hairline); }
 
 /* --- Turnos de cuidador ---------------------------------------------------- */
-/* Comparación en escala: el número es el dato, el texto lo explica. */
+/* Comparación en escala: el número es el dato, el texto lo explica.
+   Va dentro del panel del cuidador, separada por filete del bloque. */
+.turnos-bloque { padding-top: var(--s-7); border-top: 1px solid var(--hairline); }
+.turnos-bloque > .turnos { margin-top: var(--s-5); }
+
 .turnos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
 .turno { background: var(--canvas); padding: var(--s-5); display: grid; gap: var(--s-3); align-content: start; }
 .turno__horas {
@@ -93,7 +157,7 @@
 
 /* --- Refugio --------------------------------------------------------------- */
 /* Sin fotografías de personas. El peso lo carga la tipografía. */
-.refugio { scroll-margin-top: 88px; }
+.refugio { padding-bottom: var(--s-7); }
 
 .refugio__aviso {
   display: grid;
@@ -133,18 +197,28 @@
 /* --- Responsive ------------------------------------------------------------ */
 @media (max-width: 1023px) {
   .servicios__cuerpo { grid-template-columns: 1fr; gap: var(--s-6); }
-  .indice { position: static; display: flex; flex-wrap: wrap; gap: var(--s-2); }
-  .indice__titulo { width: 100%; }
-  .indice__enlace {
-    border: 1px solid var(--hairline-strong);
-    padding: 10px 14px;
-    min-height: 44px;
+
+  /* El menú deja de ser columna y pasa a fichas. No hay scroll horizontal:
+     con siete opciones, una fila que se desborda esconde la mitad del
+     portafolio detrás de un gesto que nadie descubre. */
+  .menu-portafolio { position: static; display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .menu-portafolio__titulo { width: 100%; }
+  .menu-portafolio__opcion {
+    width: auto;
     display: inline-flex;
     align-items: center;
+    gap: 8px;
+    border: 1px solid var(--hairline-strong);
+    padding: 10px 14px;
   }
-  .indice__enlace.activo { padding-left: 14px; border-color: var(--ink); }
-  .bloque { grid-template-columns: 1fr; gap: var(--s-5); padding-block: var(--s-7); }
+  .menu-portafolio__opcion.activa { border-color: var(--ink); background: var(--surface-card); }
+  .menu-portafolio__marca { display: none; }
+
+  .bloque { grid-template-columns: 1fr; gap: var(--s-5); padding-bottom: var(--s-6); }
   .bloque--invertido .bloque__media { order: 0; }
+  /* En una sola columna la foto pegajosa taparía el texto que sigue. */
+  .bloque__foto { position: static; }
+  .turnos-bloque { padding-top: var(--s-6); }
 }
 
 @media (max-width: 767px) {

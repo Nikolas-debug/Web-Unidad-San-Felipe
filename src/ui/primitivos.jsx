@@ -22,12 +22,6 @@ export function Campo({ id, etiqueta, error, opcional = false, children }) {
   )
 }
 
-/*
-  Revela a sus hijos al entrar en pantalla.
-
-  IntersectionObserver, nunca un listener de scroll: ese corre en cada frame,
-  no agrupa y tumba los fps en móvil. Se dispara una sola vez.
-*/
 export function Revelar({ as: Tag = 'div', retraso = 0, className, children, ...resto }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)

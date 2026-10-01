@@ -1,21 +1,30 @@
 import { useState } from 'react'
 import { Campo } from '../../ui/primitivos.jsx'
 import { sedes, tiposHabitacion, tiposDocumento, serviciosAdicionales } from '../../data/contenido.js'
-import { validarFamilia, hoyISO } from './validaciones.js'
+import { validarHuesped, hoyISO } from './validaciones.js'
 
 const INICIAL = {
   solicitante: '', tipoDocumento: tiposDocumento[0], documento: '',
-  celular: '', correo: '', paciente: '', parentesco: '',
+  celular: '', correo: '', personas: '1',
   sede: '', habitacion: '', ingreso: '', salida: '',
   adicionales: [], notas: '', autoriza: false,
 }
 
 /*
-  Solicitud de una familia o acompañante. Pide lo mínimo para que admisiones
-  pueda responder con disponibilidad: quién eres, quién es el paciente, dónde
-  y cuándo. Nada de datos clínicos: eso no se recoge por un formulario web.
+  Solicitud de un huésped particular: alguien que necesita habitación y no
+  viene por un tratamiento.
+
+  Es un formulario propio y no el familiar con campos apagados, porque la
+  diferencia no es de campos sino de qué se le pregunta a quién. Pedirle el
+  nombre de un paciente a quien viaja por trabajo lo obliga a declarar algo
+  que no existe, y dejar el campo "opcional" igual comunica que este sitio no
+  es para él.
+
+  Qué cambia respecto al canal familiar: no hay paciente ni parentesco; la
+  fecha de salida es obligatoria; se pregunta cuántas personas, que es lo que
+  decide si cabe en una habitación o en dos.
 */
-export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen }) {
+export default function SolicitudHuesped({ alEnviar, alVolver, alCambiarResumen }) {
   const [datos, setDatos] = useState(INICIAL)
   const [errores, setErrores] = useState({})
 
@@ -41,11 +50,10 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
 
   const enviar = (e) => {
     e.preventDefault()
-    const encontrados = validarFamilia(datos)
+    const encontrados = validarHuesped(datos)
     setErrores(encontrados)
 
     if (Object.keys(encontrados).length > 0) {
-      // Foco al primer campo con error: el usuario no debería buscarlo.
       const primero = document.querySelector('[aria-invalid="true"]')
       if (primero) primero.focus()
       return
@@ -56,17 +64,17 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
   return (
     <form className="solicitud__cuerpo" onSubmit={enviar} noValidate>
       <div className="solicitud__barra">
-        <p className="rotulo">Solicitud familiar</p>
+        <p className="rotulo">Solicitud de huésped particular</p>
         <button type="button" className="mas" onClick={alVolver}>Cambiar</button>
       </div>
 
       <div className="solicitud__campos">
         <div className="grupo">
-          <p className="grupo__titulo">Quién solicita</p>
+          <p className="grupo__titulo">Quién se hospeda</p>
           <div className="rejilla">
-            <Campo id="f-solicitante" etiqueta="Nombre completo" error={errores.solicitante}>
+            <Campo id="h-solicitante" etiqueta="Nombre completo" error={errores.solicitante}>
               <input
-                className="control" id="f-solicitante" type="text" autoComplete="name"
+                className="control" id="h-solicitante" type="text" autoComplete="name"
                 placeholder="Como aparece en tu documento"
                 value={datos.solicitante}
                 aria-invalid={errores.solicitante ? 'true' : undefined}
@@ -74,18 +82,19 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
               />
             </Campo>
 
-            <Campo id="f-parentesco" etiqueta="Parentesco con el paciente" opcional>
+            <Campo id="h-personas" etiqueta="Cuántas personas" error={errores.personas}>
               <input
-                className="control" id="f-parentesco" type="text"
-                placeholder="Hijo, hermana, cónyuge"
-                value={datos.parentesco}
-                onChange={(e) => actualizar('parentesco', e.target.value)}
+                className="control" id="h-personas" type="number" inputMode="numeric"
+                min="1" max="10" step="1"
+                value={datos.personas}
+                aria-invalid={errores.personas ? 'true' : undefined}
+                onChange={(e) => actualizar('personas', e.target.value)}
               />
             </Campo>
 
-            <Campo id="f-tipodoc" etiqueta="Tipo de documento">
+            <Campo id="h-tipodoc" etiqueta="Tipo de documento">
               <select
-                className="control" id="f-tipodoc"
+                className="control" id="h-tipodoc"
                 value={datos.tipoDocumento}
                 onChange={(e) => actualizar('tipoDocumento', e.target.value)}
               >
@@ -93,9 +102,9 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
               </select>
             </Campo>
 
-            <Campo id="f-doc" etiqueta="Número de documento" error={errores.documento}>
+            <Campo id="h-doc" etiqueta="Número de documento" error={errores.documento}>
               <input
-                className="control" id="f-doc" type="text" inputMode="numeric" autoComplete="off"
+                className="control" id="h-doc" type="text" inputMode="numeric" autoComplete="off"
                 placeholder="Sin puntos ni comas"
                 value={datos.documento}
                 aria-invalid={errores.documento ? 'true' : undefined}
@@ -103,9 +112,9 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
               />
             </Campo>
 
-            <Campo id="f-cel" etiqueta="Celular" error={errores.celular}>
+            <Campo id="h-cel" etiqueta="Celular" error={errores.celular}>
               <input
-                className="control" id="f-cel" type="tel" inputMode="tel" autoComplete="tel"
+                className="control" id="h-cel" type="tel" inputMode="tel" autoComplete="tel"
                 placeholder="300 000 0000"
                 value={datos.celular}
                 aria-invalid={errores.celular ? 'true' : undefined}
@@ -113,9 +122,9 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
               />
             </Campo>
 
-            <Campo id="f-mail" etiqueta="Correo electrónico" error={errores.correo}>
+            <Campo id="h-mail" etiqueta="Correo electrónico" error={errores.correo}>
               <input
-                className="control" id="f-mail" type="email" inputMode="email"
+                className="control" id="h-mail" type="email" inputMode="email"
                 autoComplete="email" autoCapitalize="none" autoCorrect="off"
                 placeholder="nombre@correo.com"
                 value={datos.correo}
@@ -127,21 +136,11 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
         </div>
 
         <div className="grupo">
-          <p className="grupo__titulo">Quién se hospeda</p>
+          <p className="grupo__titulo">Dónde</p>
           <div className="rejilla">
-            <Campo id="f-paciente" etiqueta="Nombre del paciente" error={errores.paciente}>
-              <input
-                className="control" id="f-paciente" type="text"
-                placeholder="Nombre y apellido"
-                value={datos.paciente}
-                aria-invalid={errores.paciente ? 'true' : undefined}
-                onChange={(e) => actualizar('paciente', e.target.value)}
-              />
-            </Campo>
-
-            <Campo id="f-sede" etiqueta="Sede" error={errores.sede}>
+            <Campo id="h-sede" etiqueta="Sede" error={errores.sede}>
               <select
-                className="control" id="f-sede"
+                className="control" id="h-sede"
                 value={datos.sede}
                 aria-invalid={errores.sede ? 'true' : undefined}
                 onChange={(e) => actualizar('sede', e.target.value)}
@@ -154,8 +153,8 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
         </div>
 
         <div className="grupo">
-          <p className="grupo__titulo" id="f-hab-label">Tipo de habitación</p>
-          <div className="opciones" role="radiogroup" aria-labelledby="f-hab-label">
+          <p className="grupo__titulo" id="h-hab-label">Tipo de habitación</p>
+          <div className="opciones" role="radiogroup" aria-labelledby="h-hab-label">
             {tiposHabitacion.map((tipo) => (
               <button
                 key={tipo.clave}
@@ -174,20 +173,20 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
         </div>
 
         <div className="grupo">
-          <p className="grupo__titulo">Fechas estimadas</p>
+          <p className="grupo__titulo">Fechas</p>
           <div className="rejilla">
-            <Campo id="f-ingreso" etiqueta="Ingreso" error={errores.ingreso}>
+            <Campo id="h-ingreso" etiqueta="Llegada" error={errores.ingreso}>
               <input
-                className="control" id="f-ingreso" type="date" min={hoyISO()}
+                className="control" id="h-ingreso" type="date" min={hoyISO()}
                 value={datos.ingreso}
                 aria-invalid={errores.ingreso ? 'true' : undefined}
                 onChange={(e) => actualizar('ingreso', e.target.value)}
               />
             </Campo>
 
-            <Campo id="f-salida" etiqueta="Salida" error={errores.salida} opcional>
+            <Campo id="h-salida" etiqueta="Salida" error={errores.salida}>
               <input
-                className="control" id="f-salida" type="date" min={datos.ingreso || hoyISO()}
+                className="control" id="h-salida" type="date" min={datos.ingreso || hoyISO()}
                 value={datos.salida}
                 aria-invalid={errores.salida ? 'true' : undefined}
                 onChange={(e) => actualizar('salida', e.target.value)}
@@ -197,8 +196,8 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
         </div>
 
         <div className="grupo">
-          <p className="grupo__titulo" id="f-adic-label">Servicios adicionales</p>
-          <div className="casillas" role="group" aria-labelledby="f-adic-label">
+          <p className="grupo__titulo" id="h-adic-label">Servicios adicionales</p>
+          <div className="casillas" role="group" aria-labelledby="h-adic-label">
             {serviciosAdicionales.map((s) => (
               <button
                 key={s.clave}
@@ -213,10 +212,10 @@ export default function SolicitudFamilia({ alEnviar, alVolver, alCambiarResumen 
           </div>
         </div>
 
-        <Campo id="f-notas" etiqueta="Algo que debamos saber" opcional>
+        <Campo id="h-notas" etiqueta="Algo que debamos saber" opcional>
           <textarea
-            className="control" id="f-notas" rows={3}
-            placeholder="Movilidad reducida, dieta especial, horarios de tratamiento"
+            className="control" id="h-notas" rows={3}
+            placeholder="Hora estimada de llegada, preferencias, alguna necesidad de acceso"
             value={datos.notas}
             onChange={(e) => actualizar('notas', e.target.value)}
           />

@@ -1,4 +1,4 @@
-import { mision, vision } from '../../datos/contenido.js'
+import { mision, vision } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 /*

@@ -1,4 +1,4 @@
-import { canales } from '../../datos/contenido.js'
+import { canales } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 /*

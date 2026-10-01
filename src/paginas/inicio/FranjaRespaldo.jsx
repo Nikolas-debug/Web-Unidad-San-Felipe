@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { respaldo } from '../../datos/contenido.js'
+import { respaldo } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 /*

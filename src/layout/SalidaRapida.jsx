@@ -1,23 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-/*
-  Salida rápida.
-
-  Para alguien que consulta la sección de refugio mientras convive con su
-  agresor, poder borrar la pantalla en un gesto no es un adorno: es la
-  diferencia entre buscar ayuda y no hacerlo. Es el patrón estándar en sitios
-  que atienden a víctimas de violencia.
-
-  Qué hace:
-  - location.replace, no assign, para que el botón "atrás" no devuelva aquí.
-  - Abre antes una pestaña neutra, así la ventana original queda reemplazada
-    y la pantalla visible no delata la consulta.
-  - Atajo de teclado: Escape dos veces seguidas, para quien no alcanza el ratón.
-
-  Lo que NO puede hacer, y por eso el aviso de historial que la acompaña:
-  ninguna página puede borrar el historial del navegador desde JavaScript.
-*/
-
 const DESTINO = 'https://www.google.com'
 const SENUELO = 'https://www.eltiempo.com'
 const VENTANA_DOBLE_ESC = 800

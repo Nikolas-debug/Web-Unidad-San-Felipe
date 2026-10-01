@@ -51,6 +51,47 @@ export function validarFamilia(datos) {
   return e
 }
 
+/* Huésped particular. Mismas reglas de identidad y fechas que el canal
+   familiar, sin nada de paciente: quien no viene por un tratamiento no tiene
+   por qué declarar uno. A cambio, la salida sí es obligatoria —una estancia
+   sin motivo clínico tiene fecha de fin conocida— y se pide cuántas personas,
+   que es lo que decide si cabe en una habitación o en dos. */
+export function validarHuesped(datos) {
+  const e = {}
+
+  if (String(datos.solicitante || '').trim().split(/\s+/).filter(Boolean).length < 2) {
+    e.solicitante = 'Escribe tu nombre y apellido.'
+  }
+  if (!RX.documento.test(limpiarNumero(datos.documento))) {
+    e.documento = 'Número de documento inválido, sin puntos.'
+  }
+  if (!RX.celular.test(limpiarNumero(datos.celular))) {
+    e.celular = 'Celular de 10 dígitos que empiece por 3.'
+  }
+  if (!RX.correo.test(String(datos.correo || '').trim())) {
+    e.correo = 'Correo electrónico inválido.'
+  }
+
+  const personas = Number(datos.personas)
+  if (!Number.isInteger(personas) || personas < 1 || personas > 10) {
+    e.personas = 'Indica cuántas personas se hospedan, entre 1 y 10.'
+  }
+
+  if (!datos.sede) e.sede = 'Selecciona la sede.'
+  if (!datos.habitacion) e.habitacion = 'Selecciona el tipo de habitación.'
+  if (!datos.ingreso) e.ingreso = 'Indica la fecha de llegada.'
+  if (!datos.salida) e.salida = 'Indica la fecha de salida.'
+
+  if (datos.ingreso && datos.salida && datos.salida <= datos.ingreso) {
+    e.salida = 'La salida tiene que ser posterior al ingreso.'
+  }
+  if (!datos.autoriza) {
+    e.autoriza = 'Necesitamos tu autorización para procesar la solicitud.'
+  }
+
+  return e
+}
+
 export function validarInstitucion(datos) {
   const e = {}
 

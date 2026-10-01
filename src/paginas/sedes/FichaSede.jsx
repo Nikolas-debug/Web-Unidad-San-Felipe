@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { empresa } from '../../datos/contenido.js'
+import { empresa } from '../../data/contenido.js'
 
 /*
   Ficha de una sede. La tabla es tabla de verdad: son pares dato y valor, y

@@ -1,4 +1,4 @@
-import { sedes } from '../../datos/contenido.js'
+import { sedes } from '../../data/contenido.js'
 
 /*
   Conmutador entre sedes. Patrón de pestañas accesible: roles tab/tablist,

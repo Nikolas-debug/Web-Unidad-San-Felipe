@@ -7,12 +7,22 @@
 
 /* --- Bifurcación de canal --------------------------------------------------- */
 /* Dos caminos muy distintos: institución que remite o familia que solicita. */
-.bifurcacion { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4); }
+/* Tres canales. `auto-fit` y no `repeat(3, …)`: con tres tarjetas de texto
+   largo, tres columnas a 1024px dejan líneas de seis palabras. Así caen a dos
+   y luego a una según el ancho disponible. */
+.bifurcacion {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--s-4);
+}
 
 .canal {
   display: grid;
+  /* Cinco filas: índice, título, texto, detalle y acción. El 1fr absorbe la
+     diferencia de largo entre los tres canales para que "Continuar" quede a
+     la misma altura en las tres tarjetas. */
+  grid-template-rows: auto auto auto 1fr auto;
   gap: var(--s-3);
-  align-content: start;
   padding: clamp(24px, 3vw, 40px);
   text-align: left;
   background: var(--canvas);

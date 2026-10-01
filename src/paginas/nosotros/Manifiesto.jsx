@@ -1,4 +1,4 @@
-import { quienesSomos } from '../../datos/contenido.js'
+import { quienesSomos } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 /*

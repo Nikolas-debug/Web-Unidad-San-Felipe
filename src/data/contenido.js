@@ -1,9 +1,4 @@
-/* ==========================================================================
-   Contenido real del portafolio de servicios de Unidad San Felipe.
-   Fuente única de verdad: si un texto cambia, cambia aquí y no en la vista.
-   Todo lo de este archivo sale del PDF del cliente, salvo lo marcado
-   como PENDIENTE, que hay que confirmar en la entrevista de requisitos.
-   ========================================================================== */
+
 
 export const empresa = {
   nombre: 'Unidad San Felipe',
@@ -20,8 +15,6 @@ export const empresa = {
 }
 
 export const quienesSomos = {
-  /* Titular corto para la portada: a 64 px la frase larga se parte en cuatro
-     líneas y el sistema pide máximo dos. */
   titularPortada: 'Hospedaje para quien viaja a tratarse',
   titulo: 'Un lugar donde quedarse cuando el tratamiento queda lejos de casa',
   parrafos: [
@@ -71,8 +64,6 @@ export const pilares = [
   },
 ]
 
-/* Lo que el portafolio llama "atención integral para pacientes y acompañantes".
-   Es el argumento frente a instituciones, no frente a la familia. */
 export const respaldo = [
   'Espacio físico registrado directamente a nombre de la institución.',
   'Talento humano capacitado y disponible 24 horas, los 7 días.',
@@ -83,9 +74,6 @@ export const respaldo = [
   'Espacios que cumplen requisitos de inspección y habilitación.',
 ]
 
-/* La ruta que recorre un usuario. No sale textual del portafolio: es la
-   secuencia que el documento describe, ordenada para la vista de inicio.
-   PENDIENTE de validar con el cliente en la entrevista de requisitos. */
 export const ruta = [
   {
     paso: 1,
@@ -114,14 +102,12 @@ export const ruta = [
   },
 ]
 
-/* ---- Servicios -------------------------------------------------------- */
-/* Cada bloque se renderiza como una pieza editorial independiente. */
 export const servicios = [
   {
     clave: 'hogar-de-paso',
     rotulo: 'Hogar de paso',
-    titulo: 'Alojamiento transitorio para el paciente y su acompañante',
-    entrada: 'El servicio base. Una habitación para quien viaja a tratarse y para quien lo acompaña, con todo lo necesario alrededor.',
+    titulo: 'Alojamiento para pacientes, acompañantes y huéspedes particulares',
+    entrada: 'Una habitación para quien lo necesita, con todo lo necesario alrededor.',
     imagen: '/img/habitacion-divisor.jpg',
     alt: 'Habitación con dos camas separadas por un divisor de listones de madera',
     puntos: [
@@ -131,6 +117,7 @@ export const servicios = [
       'Servicio de lavado, secado y desinfección de ropa',
       'Transporte no asistencial para movilidad de pacientes',
     ],
+    apertura: 'No hay que estar en tratamiento para quedarse. Las habitaciones están abiertas a cualquier huésped: quien viaja por trabajo, quien acompaña a alguien sin ser familiar, o quien solo necesita dónde dormir unas noches. La reserva se hace por el canal de huésped particular.',
   },
   {
     clave: 'alimentacion',
@@ -143,7 +130,9 @@ export const servicios = [
       'Minutas adaptadas a requerimientos clínicos',
       'Preparación en sede propia',
       'Suministro durante toda la estancia',
+      'Restaurante abierto al público en la misma sede',
     ],
+    apertura: 'La misma cocina funciona como restaurante abierto al público, no solo para los usuarios del hogar de paso. Mismo equipo, misma sede.',
   },
   {
     clave: 'lavanderia',
@@ -175,6 +164,24 @@ export const servicios = [
       'Rehabilitación',
       'Toma de muestras de laboratorio clínico',
     ],
+  },
+  {
+    clave: 'cuidador',
+    rotulo: 'Cuidador especializado',
+    titulo: 'Cuidador para enfermedades especiales y tercera edad',
+    entrada: 'Acompañamiento permanente para adultos mayores y para personas con enfermedades crónicas o degenerativas que necesitan supervisión y ayuda en el día a día. El cuidador trabaja por turnos, en el hogar de paso o en el domicilio del usuario.',
+    imagen: '/img/cuidador.jpg',
+    alt: 'Cuidadora en uniforme sostiene las manos de una adulta mayor sentada junto a su cama',
+    puntos: [
+      'Adultos mayores que viven solos o necesitan compañía permanente',
+      'Personas con deterioro cognitivo, como demencia o enfermedad de Alzheimer',
+      'Pacientes con movilidad reducida o en recuperación después de una cirugía',
+      'Enfermedades crónicas que exigen rutina, control y supervisión',
+      'Personas en condición de discapacidad que requieren asistencia diaria',
+    ],
+    turnos: true,
+    alcance: 'El cuidador asiste, acompaña y reporta. Cuando el caso necesita manejo clínico —curaciones, medicación endovenosa, oxígeno o valoración médica— el servicio se articula con atención domiciliaria y extensión hospitalaria, que sí cuentan con personal de enfermería y médico.',
+    borrador: true,
   },
   {
     clave: 'terapias',
@@ -216,8 +223,6 @@ export const servicios = [
   },
 ]
 
-/* Turnos del servicio de cuidador profesional. Va como pieza propia
-   porque es una comparación, no una lista. */
 export const turnos = [
   {
     horas: '8',
@@ -243,8 +248,6 @@ export const cuidadorIncluye = [
   'Monitoreo constante del estado del paciente',
 ]
 
-/* ---- Refugio para víctimas de violencia de género --------------------- */
-/* Sin fotografías de personas, por decisión de diseño. */
 export const refugio = {
   rotulo: 'Modelo de hospedaje protegido',
   titulo: 'Hospedaje para víctimas de violencia de género',
@@ -263,16 +266,14 @@ export const refugio = {
   },
 }
 
-/* ---- Sedes ------------------------------------------------------------ */
-/* El portafolio dice "contamos con dos sedes" pero solo trae la dirección
-   de una. La segunda queda marcada como PENDIENTE. */
+
 export const sedes = [
   {
     clave: 'castellana',
     nombre: 'Sede La Castellana',
     condicion: 'Sede principal',
     direccion: 'Calle 62A # 9-17, barrio La Castellana',
-    ciudad: 'Bogotá',
+    ciudad: 'Montería',
     telefono: '324 362 0696',
     descripcion: 'Sede principal del hogar de paso, con habitaciones, áreas comunes, cocina propia y lavandería.',
     dotacion: [
@@ -284,22 +285,7 @@ export const sedes = [
       'Transporte no asistencial',
     ],
     confirmada: true,
-  },
-  {
-    clave: 'segunda-sede',
-    nombre: 'Segunda sede',
-    condicion: 'Datos por confirmar',
-    direccion: 'PENDIENTE de confirmar con el cliente',
-    ciudad: 'Bogotá',
-    telefono: '324 362 0696',
-    descripcion: 'El portafolio indica que la operación cuenta con dos sedes diseñadas para el bienestar de los usuarios, pero no incluye la dirección de la segunda.',
-    dotacion: [
-      'Habitaciones unipersonales',
-      'Habitaciones bipersonales',
-      'Áreas comunes confortables',
-    ],
-    confirmada: false,
-  },
+  }
 ]
 
 /* Galería de espacios. Todas las fotos salen del portafolio del cliente. */
@@ -332,7 +318,33 @@ export const canales = [
     texto: 'Necesito hospedaje mientras mi familiar recibe tratamiento.',
     detalle: 'Solicitud directa con los datos del paciente y las fechas estimadas de estancia.',
   },
+  {
+    clave: 'huesped',
+    titulo: 'Soy huésped particular',
+    texto: 'Necesito una habitación y no vengo por un tratamiento médico.',
+    detalle: 'Solicitud sin datos de paciente: quién se hospeda, cuántas personas y las fechas.',
+  },
 ]
+
+export const apertura = {
+  rotulo: 'Abierto al público',
+  titulo: 'Ofrecemos nuestros servicios de alimentación y hospedaje a todos',
+  texto: 'El hogar de paso nació para pacientes y acompañantes y lo sigue siendo. Pero las habitaciones y la cocina están abiertas a cualquiera.',
+  frentes: [
+    {
+      clave: 'hospedaje',
+      titulo: 'Habitación',
+      texto: 'Las mismas habitaciones y áreas comunes, con talento humano disponible 24 horas',
+      enlace: { a: '/reservar', texto: 'Reservar habitación' },
+    },
+    {
+      clave: 'restaurante',
+      titulo: 'Restaurante',
+      texto: 'En nuestra misma sede podrás encontrar nuestro menú con todo lo que tenemos para ofrecerte',
+      enlace: { a: '/servicios#alimentacion', texto: 'Ver el servicio' },
+    },
+  ],
+}
 
 export const tiposHabitacion = [
   { clave: 'unipersonal', nombre: 'Unipersonal', texto: 'Una cama. Para el paciente o el acompañante.' },

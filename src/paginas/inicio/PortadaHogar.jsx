@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { empresa, quienesSomos } from '../../datos/contenido.js'
+import { empresa, quienesSomos } from '../../data/contenido.js'
 
 export default function PortadaHogar() {
   return (
@@ -11,8 +11,8 @@ export default function PortadaHogar() {
           <h1 className="d-xl">{quienesSomos.titularPortada}</h1>
 
           <p className="entrada">
-            Hospedaje, alimentación y transporte para pacientes y acompañantes
-            que se desplazan por atención médica.
+            Hospedaje, alimentación y transporte para quien se desplaza por
+            atención médica, y habitación y restaurante abiertos al público.
           </p>
 
           <div className="portada__acciones">
@@ -26,15 +26,15 @@ export default function PortadaHogar() {
 
           <div className="portada__pie">
             <div className="portada__dato">
-              <b>2</b>
-              <span>SEDES EN {empresa.ciudad.toUpperCase()}</span>
+              <b>1</b>
+              <span>SEDE EN {empresa.ciudad.toUpperCase()}</span>
             </div>
             <div className="portada__dato">
               <b>24/7</b>
               <span>TALENTO HUMANO DISPONIBLE</span>
             </div>
             <div className="portada__dato">
-              <b>6</b>
+              <b>7</b>
               <span>LÍNEAS DE SERVICIO</span>
             </div>
           </div>

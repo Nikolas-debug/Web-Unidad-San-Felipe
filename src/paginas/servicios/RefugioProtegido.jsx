@@ -1,38 +1,12 @@
-import { refugio, empresa } from '../../datos/contenido.js'
+import { refugio, empresa } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
-/*
-  Modelo de hospedaje para víctimas de violencia de género.
-
-  Tres decisiones deliberadas, distintas al resto del portafolio:
-
-  1. Sin fotografías de personas. Cualquier retrato aquí, por respetuoso que
-     sea, convierte a una víctima en material promocional. El peso lo carga
-     la tipografía.
-  2. Aviso de historial visible antes que la descripción del servicio. Ninguna
-     página puede borrar el historial del navegador, así que lo honesto es
-     advertirlo, no simular que la salida rápida lo resuelve todo.
-  3. La línea 155 aparece completa y destacada. Es el recurso que puede
-     servirle a alguien que no está listo para contactar a la institución.
-
-  La salida rápida se monta desde la vista Servicios cuando esta sección
-  entra en pantalla.
-*/
+/* El id y el rol de panel los pone la vista Servicios: esta sección ya no es
+   un ancla dentro de la página, es la pestaña "Refugio protegido". La salida
+   rápida se monta con ella y se desmonta al cambiar de servicio. */
 export default function RefugioProtegido() {
   return (
-    <section className="refugio banda" id="refugio">
-      <Revelar className="refugio__aviso" role="note">
-        <p>
-          <b>Antes de seguir leyendo.</b> Este sitio no puede borrar el
-          historial de tu navegador. Si alguien más usa este dispositivo, la
-          visita puede quedar registrada.
-        </p>
-        <p>
-          El botón <b>Salir rápido</b> de la esquina cierra esta página de
-          inmediato y la reemplaza por otra. También funciona presionando la
-          tecla Escape dos veces seguidas.
-        </p>
-      </Revelar>
+    <div className="refugio">
 
       <Revelar className="refugio__cabecera">
         <p className="rotulo rotulo--azul">{refugio.rotulo}</p>
@@ -68,6 +42,6 @@ export default function RefugioProtegido() {
           </p>
         </div>
       </Revelar>
-    </section>
+    </div>
   )
 }

@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 
-import Encabezado from './cascaron/Encabezado.jsx'
-import PieDePagina from './cascaron/PieDePagina.jsx'
-import IrArriba from './cascaron/IrArriba.jsx'
+import Encabezado from './layout/Encabezado.jsx'
+import PieDePagina from './layout/PieDePagina.jsx'
+import IrArriba from './layout/IrArriba.jsx'
 
 import Inicio from './paginas/inicio/Inicio.jsx'
 import Servicios from './paginas/servicios/Servicios.jsx'

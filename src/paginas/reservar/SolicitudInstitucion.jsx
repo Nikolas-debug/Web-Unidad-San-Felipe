@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Campo } from '../../ui/primitivos.jsx'
-import { sedes, serviciosAdicionales } from '../../datos/contenido.js'
+import { sedes, serviciosAdicionales } from '../../data/contenido.js'
 import { validarInstitucion, hoyISO } from './validaciones.js'
 
 const INICIAL = {

@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PortadaHogar from './PortadaHogar.jsx'
 import TresPilares from './TresPilares.jsx'
+import AbiertoAlPublico from './AbiertoAlPublico.jsx'
 import RutaDelUsuario from './RutaDelUsuario.jsx'
 import FranjaRespaldo from './FranjaRespaldo.jsx'
 import { Revelar } from '../../ui/primitivos.jsx'
-import { empresa } from '../../datos/contenido.js'
+import { empresa } from '../../data/contenido.js'
 
 export default function Inicio() {
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function Inicio() {
     <>
       <PortadaHogar />
       <TresPilares />
+      <AbiertoAlPublico />
       <RutaDelUsuario />
       <FranjaRespaldo />
 

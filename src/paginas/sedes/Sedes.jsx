@@ -3,7 +3,7 @@ import SelectorSede from './SelectorSede.jsx'
 import FichaSede from './FichaSede.jsx'
 import GaleriaEspacios from './GaleriaEspacios.jsx'
 import { Revelar } from '../../ui/primitivos.jsx'
-import { sedes, empresa } from '../../datos/contenido.js'
+import { sedes, empresa } from '../../data/contenido.js'
 
 export default function Sedes() {
   const [activa, setActiva] = useState(sedes[0].clave)

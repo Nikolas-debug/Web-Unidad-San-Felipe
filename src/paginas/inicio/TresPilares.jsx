@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { pilares } from '../../datos/contenido.js'
+import { pilares } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 export default function TresPilares() {

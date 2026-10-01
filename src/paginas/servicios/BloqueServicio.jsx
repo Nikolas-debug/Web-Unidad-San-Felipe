@@ -3,21 +3,26 @@ import { Revelar } from '../../ui/primitivos.jsx'
 
 /*
   Un servicio del portafolio, como pieza editorial.
-  Alterna el lado de la foto, pero nunca más de dos veces seguidas con el
-  mismo patrón: el zigzag infinito es tan templado como la tarjeta repetida.
-  Por eso el bloque de terapias rompe la alternancia con definiciones.
+
+  Solo hay uno en pantalla a la vez, así que la alternancia de lado ya no
+  compone una página: compone el recorrido. Al pasar de un servicio al
+  siguiente la foto cambia de lado, y ese salto es lo que hace evidente que
+  el contenido cambió sin necesidad de animar nada.
 */
 export default function BloqueServicio({ servicio, invertido }) {
-  const { clave, rotulo, titulo, entrada, imagen, alt, puntos, terapias } = servicio
+  const { rotulo, titulo, entrada, imagen, alt, puntos, terapias, alcance, apertura } = servicio
 
   return (
     <Revelar
       as="article"
-      id={clave}
       className={clsx('bloque', invertido && 'bloque--invertido')}
     >
+      {/* La foto se queda pegada mientras se lee la lista. Los servicios con
+          más puntos dejaban un hueco de media pantalla en esta columna. */}
       <figure className="bloque__media">
-        <img src={imagen} alt={alt} loading="lazy" />
+        <span className="bloque__foto">
+          <img src={imagen} alt={alt} loading="lazy" />
+        </span>
       </figure>
 
       <div className="bloque__texto">
@@ -47,6 +52,22 @@ export default function BloqueServicio({ servicio, invertido }) {
               </div>
             ))}
           </div>
+        )}
+
+        {/* Quién puede usarlo. Va en azul y no en gris porque amplía el
+            servicio: es una invitación, no una advertencia. */}
+        {apertura && (
+          <p className="bloque__apertura">
+            <b>Abierto al público.</b> {apertura}
+          </p>
+        )}
+
+        {/* Dónde termina el servicio. Un portafolio que solo dice lo que sí
+            hace deja al usuario descubrir el límite cuando ya es tarde. */}
+        {alcance && (
+          <p className="bloque__alcance">
+            <b>Hasta dónde llega.</b> {alcance}
+          </p>
         )}
       </div>
     </Revelar>

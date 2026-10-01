@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import clsx from 'clsx'
-import { empresa, navegacion } from '../datos/contenido.js'
+import { empresa, navegacion } from '../data/contenido.js'
 
 export default function Encabezado() {
   const [abierto, setAbierto] = useState(false)

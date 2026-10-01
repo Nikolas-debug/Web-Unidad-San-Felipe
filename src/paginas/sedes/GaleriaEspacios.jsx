@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { espacios } from '../../datos/contenido.js'
+import { espacios } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 /*

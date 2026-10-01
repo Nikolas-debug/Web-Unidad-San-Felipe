@@ -1,4 +1,4 @@
-import { ruta } from '../../datos/contenido.js'
+import { ruta } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
 
 /*
