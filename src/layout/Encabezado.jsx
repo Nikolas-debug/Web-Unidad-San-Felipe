@@ -55,10 +55,6 @@ export default function Encabezado() {
             ))}
           </nav>
 
-          <a className="encabezado__tel" href={`tel:${empresa.telefonoEnlace}`}>
-            {empresa.telefono}
-          </a>
-
           <Link className="boton boton--primario boton--chico" to="/reservar">
             Reservar
           </Link>

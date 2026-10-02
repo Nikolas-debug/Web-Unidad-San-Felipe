@@ -121,24 +121,6 @@ export default function Servicios() {
         </div>
       </div>
 
-      <section className="banda banda--oscura en-oscuro">
-        <div className="contenedor">
-          <Revelar className="cierre">
-            <h2 className="d-md">¿Necesitas un cupo?</h2>
-            <p className="entrada">
-              Cuéntanos el caso y admisiones responde con la disponibilidad
-              real de las sedes.
-            </p>
-            <div className="cierre__acciones">
-              <Link className="boton boton--primario" to="/reservar">Reservar habitación</Link>
-              <a className="boton boton--sobre-oscuro" href={`tel:${empresa.telefonoEnlace}`}>
-                Llamar {empresa.telefono}
-              </a>
-            </div>
-          </Revelar>
-        </div>
-      </section>
-
       {activo === REFUGIO && <SalidaRapida />}
     </>
   )

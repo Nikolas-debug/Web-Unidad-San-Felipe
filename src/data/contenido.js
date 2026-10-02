@@ -15,7 +15,7 @@ export const empresa = {
 }
 
 export const quienesSomos = {
-  titularPortada: 'Hospedaje para quien viaja a tratarse',
+  titularPortada: 'Sede la Castellana',
   titulo: 'Un lugar donde quedarse cuando el tratamiento queda lejos de casa',
   parrafos: [
     'Somos una institución comprometida con el bienestar social de la comunidad, que apoya con la prestación de servicios en salud y con hospedaje a los familiares o acompañantes de pacientes hospitalizados, en tratamiento o convalecientes en la red hospitalaria.',
@@ -44,25 +44,6 @@ export const vision = {
     },
   ],
 }
-
-/* Los tres pilares del modelo, tal como los plantea el portafolio. */
-export const pilares = [
-  {
-    clave: 'hospedaje',
-    titulo: 'Hospedaje',
-    texto: 'Habitaciones unipersonales y bipersonales, áreas comunes confortables y espacios pensados para el descanso del paciente y de quien lo acompaña.',
-  },
-  {
-    clave: 'alimentacion',
-    titulo: 'Alimentación',
-    texto: 'Cocina propia con prácticas de nutrición hospitalaria y domiciliaria, adaptada a los requerimientos de cada usuario.',
-  },
-  {
-    clave: 'transporte',
-    titulo: 'Transporte',
-    texto: 'Transporte no asistencial para la movilidad de pacientes entre el hogar de paso y la institución donde reciben atención.',
-  },
-]
 
 export const respaldo = [
   'Espacio físico registrado directamente a nombre de la institución.',
@@ -105,6 +86,7 @@ export const ruta = [
 export const servicios = [
   {
     clave: 'hogar-de-paso',
+    breve: 'Habitación para el paciente, su acompañante o cualquier huésped.',
     rotulo: 'Hogar de paso',
     titulo: 'Alojamiento para pacientes, acompañantes y huéspedes particulares',
     entrada: 'Una habitación para quien lo necesita, con todo lo necesario alrededor.',
@@ -121,6 +103,7 @@ export const servicios = [
   },
   {
     clave: 'alimentacion',
+    breve: 'Cocina propia y restaurante abierto al público.',
     rotulo: 'Alimentación',
     titulo: 'Cocina propia con enfoque de nutrición hospitalaria',
     entrada: 'Unidad San Felipe se compromete con la excelencia en la prestación del servicio de alimentación, con prácticas de nutrición hospitalaria y domiciliaria adaptadas a cada usuario.',
@@ -136,6 +119,7 @@ export const servicios = [
   },
   {
     clave: 'lavanderia',
+    breve: 'Lavado, secado y desinfección de ropa.',
     rotulo: 'Lavandería',
     titulo: 'Lavado, secado y desinfección de ropa',
     entrada: 'Brindamos servicio de lavado, secado y desinfección de ropa, garantizando condiciones óptimas de higiene para los usuarios.',
@@ -149,6 +133,7 @@ export const servicios = [
   },
   {
     clave: 'domiciliaria',
+    breve: 'Consulta médica, enfermería y toma de muestras en casa.',
     rotulo: 'Atención domiciliaria',
     titulo: 'Atención clínica en la residencia del usuario',
     entrada: 'Llevamos la atención al domicilio cuando el paciente puede recuperarse en casa, con seguimiento médico y de enfermería.',
@@ -167,6 +152,7 @@ export const servicios = [
   },
   {
     clave: 'cuidador',
+    breve: 'Acompañamiento por turnos de 8, 12 o 24 horas.',
     rotulo: 'Cuidador especializado',
     titulo: 'Cuidador para enfermedades especiales y tercera edad',
     entrada: 'Acompañamiento permanente para adultos mayores y para personas con enfermedades crónicas o degenerativas que necesitan supervisión y ayuda en el día a día. El cuidador trabaja por turnos, en el hogar de paso o en el domicilio del usuario.',
@@ -185,6 +171,7 @@ export const servicios = [
   },
   {
     clave: 'terapias',
+    breve: 'Física, respiratoria y ocupacional, a domicilio.',
     rotulo: 'Terapias',
     titulo: 'Terapia física, respiratoria y ocupacional',
     entrada: 'Realizamos atención domiciliaria en tres líneas de terapia, en cualquier ciclo vital.',
@@ -208,6 +195,7 @@ export const servicios = [
   },
   {
     clave: 'extension-hospitalaria',
+    breve: 'Manejo clínico continuo fuera del hospital.',
     rotulo: 'Extensión hospitalaria',
     titulo: 'Hospitalización domiciliaria y cama de transición',
     entrada: 'Garantizar atención hospitalaria fuera del hospital, dirigida a pacientes que requieren manejo clínico continuo pero se encuentran clínicamente estables para recibir la atención en un entorno extramural.',
@@ -288,10 +276,6 @@ export const sedes = [
   }
 ]
 
-/* Galería de espacios. Todas las fotos salen del portafolio del cliente. */
-/* Los títulos describen lo que realmente muestra cada foto del portafolio.
-   Ojo: no hay ninguna imagen de habitación unipersonal, aunque el servicio
-   exista. Ver NOTES.md, queda pendiente pedírsela al cliente. */
 export const espacios = [
   { src: '/img/sala-estar.jpg', alt: 'Recepción con sofá curvo, luz cálida y la marca en la pared', titulo: 'Recepción', formato: 'ancho' },
   { src: '/img/habitacion-divisor.jpg', alt: 'Habitación con dos camas separadas por un divisor de listones', titulo: 'Habitación con divisor', formato: 'alto' },
@@ -329,7 +313,6 @@ export const canales = [
 export const apertura = {
   rotulo: 'Abierto al público',
   titulo: 'Ofrecemos nuestros servicios de alimentación y hospedaje a todos',
-  texto: 'El hogar de paso nació para pacientes y acompañantes y lo sigue siendo. Pero las habitaciones y la cocina están abiertas a cualquiera.',
   frentes: [
     {
       clave: 'hospedaje',

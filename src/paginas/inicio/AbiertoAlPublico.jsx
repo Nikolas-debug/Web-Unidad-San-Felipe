@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
-import { apertura } from '../../data/contenido.js'
+import { apertura, empresa } from '../../data/contenido.js'
 import { Revelar } from '../../ui/primitivos.jsx'
+
 export default function AbiertoAlPublico() {
   return (
     <section className="banda banda--ajustada apertura">
       <div className="contenedor">
         <Revelar className="apertura__cabecera">
           <p className="rotulo rotulo--azul">{apertura.rotulo}</p>
-          <h2 className="d-md">{apertura.titulo}</h2>
-          <p className="entrada">{apertura.texto}</p>
+          <h2 className="d-md">{empresa.promesa}</h2>
         </Revelar>
 
         <div className="apertura__frentes">

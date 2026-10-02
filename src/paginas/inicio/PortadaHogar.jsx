@@ -11,8 +11,7 @@ export default function PortadaHogar() {
           <h1 className="d-xl">{quienesSomos.titularPortada}</h1>
 
           <p className="entrada">
-            Hospedaje, alimentación y transporte para quien se desplaza por
-            atención médica, y habitación y restaurante abiertos al público.
+            Servicios de hospedaje, alimentación, transporte, extensión hospitalaria, atención domiciliaria y lavandería; Abiertos al público y para quien se desplaza por atención médica.
           </p>
 
           <div className="portada__acciones">
@@ -34,8 +33,8 @@ export default function PortadaHogar() {
               <span>TALENTO HUMANO DISPONIBLE</span>
             </div>
             <div className="portada__dato">
-              <b>7</b>
-              <span>LÍNEAS DE SERVICIO</span>
+              <b>1</b>
+              <span>LÍNEA DE SERVICIO</span>
             </div>
           </div>
         </div>
