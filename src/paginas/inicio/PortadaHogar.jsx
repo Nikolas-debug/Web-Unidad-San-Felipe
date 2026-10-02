@@ -6,9 +6,9 @@ export default function PortadaHogar() {
     <section className="portada en-oscuro">
       <div className="contenedor portada__rejilla">
         <div className="portada__texto">
-          <p className="rotulo rotulo--apagado">{empresa.linea} · {empresa.ciudad}</p>
+          <p className="rotulo rotulo--apagado">{empresa.lema}</p>
 
-          <h1 className="d-xl">{quienesSomos.titularPortada}</h1>
+          <h1 className="d-xl">{empresa.nombre}</h1>
 
           <p className="entrada">
             Servicios de hospedaje, alimentación, transporte, extensión hospitalaria, atención domiciliaria y lavandería; Abiertos al público y para quien se desplaza por atención médica.

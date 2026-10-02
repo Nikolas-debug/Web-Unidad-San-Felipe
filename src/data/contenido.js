@@ -15,7 +15,6 @@ export const empresa = {
 }
 
 export const quienesSomos = {
-  titularPortada: 'Sede la Castellana',
   titulo: 'Un lugar donde quedarse cuando el tratamiento queda lejos de casa',
   parrafos: [
     'Somos una institución comprometida con el bienestar social de la comunidad, que apoya con la prestación de servicios en salud y con hospedaje a los familiares o acompañantes de pacientes hospitalizados, en tratamiento o convalecientes en la red hospitalaria.',
